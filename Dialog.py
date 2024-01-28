@@ -5,11 +5,13 @@ import ReisenTest
 import Stadt
 
 
+
 class Mydialog():
     def __init__(self):
         self.player = Player.Player()
         self.player.location = ReisenTest.hamilton
 
+        Player.Player.waffe = Items.holzschwert
 
     def Dialog(self):
         print("""
@@ -25,8 +27,8 @@ du kannst:
                 dest = input()
                 self.player.location.travel(Stadt.welt[dest])
                 self.player.location = Stadt.welt[dest]
-            #if chosen == "Inventory":
-                #Inventory.Inventory()
+            if chosen == "Inventory":
+                Inventory.Inventory()
         self.Dialog()
 
 

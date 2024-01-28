@@ -10,3 +10,4 @@ class Player:
     maxhp = 10
     location = 0
     waffe = 0
+    crit = 10
