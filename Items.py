@@ -16,6 +16,7 @@ class Sword(Weapons):
         self.dmg = 2
         self.crit = 5
         self.name = "None"
+        self.wert = 0
 
     def Unequip(self, target):
         Player.Player.attack -= target.dmg
@@ -38,6 +39,8 @@ class Holzschwert(Sword):
     def __init__(self):
         super().__init__()
         self.name = "holzschwert"
+        self.wert = 1
+
 
 class Steinschwert(Sword):
 
@@ -46,12 +49,24 @@ class Steinschwert(Sword):
         self.name = "steinschwert"
         self.dmg = 3
         self.crit = 9
+        self.wert = 10
+
+class Eisenschwert(Sword):
+    def __init__(self):
+        super().__init__()
+        self.name = "eisenschwert"
+        self.dmg = 10
+        self.crit = 10
+        self.wert = 50
+
 
 holzschwert = Holzschwert()
 steinschwert = Steinschwert()
+eisenschwert = Eisenschwert()
 
 
 
 items = dict()
 items[holzschwert.name] = holzschwert
 items[steinschwert.name] = steinschwert
+items[eisenschwert.name] = eisenschwert

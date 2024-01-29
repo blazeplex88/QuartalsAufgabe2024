@@ -3,7 +3,7 @@ import Items
 import Player
 import ReisenTest
 import Stadt
-
+import traders
 
 
 class Mydialog():
@@ -29,6 +29,15 @@ du kannst:
                 self.player.location = Stadt.welt[dest]
             if chosen == "Inventory":
                 Inventory.Inventory()
+            if chosen == "trade":
+                print("In dieser Stadt gibt es die Händler:", self.player.location.traders,"mit wem möchtest du handeln")
+                self.choice = input()
+                if self.choice in self.player.location.traders:
+                    traders.trader[self.choice].trade()
+                elif self.choice == "nein":
+                    self.Dialog()
+                else:
+                    print("etwas ist fehlgeschlagen. Bitte probiere es erneut")
         self.Dialog()
 
 

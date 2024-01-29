@@ -2,6 +2,9 @@ from math import sqrt
 #hier importieren wir die funktion des Wurzelziehens aus der Mathe datei die in pycharm mit instaliert ist
 
 import Player
+import traders
+
+
 #hier importieren wir alle KLassen, Funktionen und Variablen aus der datei Player welche ich erstellt habe
 
 
@@ -16,6 +19,7 @@ class Loc:
         self.y = 0
         self.z = 0
         self.options = [0]
+        self.traders = 0
         #die Variablen der Instanzen und dieser Klasse
 
     def travel(self, dest):
@@ -75,7 +79,9 @@ class Hamilton(Loc):
     def __init__(self):
         super().__init__()
         self.name = "Hamilton"
-        self.options = ["travel", "Inventory"]
+        self.options = ["travel", "Inventory", "trade"]
+        self.traders = [traders.otto.name]
+
         #Variablen bearbeitet
 class George(Loc):
 #Eine weitere Instanz erstellt
