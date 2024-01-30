@@ -15,13 +15,23 @@ class Trader():
         print("dies sind meine Waren:", self.waren,"möchten sie etwas kaufen?")
         object = input()
         if object in self.waren:
-            if Items.items[object].wert <= Player.Player.money:
-                self.waren.remove(object)
-                Player.Player.money -= Items.items[object].wert
-                Inventory.inv.append(object)
-                print("der Handel war erfolgreich")
+            print("Dieses Objekt kostet:",Items.items[object].wert,"Sie haben momentan:", Player.Player.money,"Wollen sie es kaufen? y/n")
+            self.yn = input()
+            if self.yn == "y":
+                if Items.items[object].wert <= Player.Player.money:
+                    self.waren.remove(object)
+                    Player.Player.money -= Items.items[object].wert
+                    Inventory.inv.append(object)
+                    print("der Handel war erfolgreich")
+                    print("[Geld-",Items.items[object].wert,"]")
+                    print("[",object,"ins Inventar hinzugefügt]")
+                else:
+                    print("Du bist zu arm, komm wieder wenn du einen Job oder so was gefunden hast")
             else:
-                print("Du bist zu arm, komm wieder wenn du einen Job oder so was gefunden hast")
+                print("schade. Vieleicht gefällt ihnen ja etwas anderes?")
+                self.trade()
+        if object == "n":
+            print("Noch einen schönen Tag.")
 
 
 class Otto(Trader):

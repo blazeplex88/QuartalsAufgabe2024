@@ -10,6 +10,12 @@ inv = ["holzschwert", "steinschwert"]
 
 def Inventory():
     print("in deinem Inventar befindet sich:",inv,)
+    print("""Waffe: [""",Player.waffe.name,"""]
+zweite Hand: [""",Player.offhand.name,"""]
+Helm: [""",Player.head.name,"""]
+Brustplatte: [""",Player.chest.name,"""]
+Hose: [""",Player.legs.name,"""]
+Schuhe: [""",Player.feet.name,"""]""")
     print("mit was möchtest du Interagieren?")
     choice = input()
     if choice in inv:

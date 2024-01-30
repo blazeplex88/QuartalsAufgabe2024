@@ -1,5 +1,6 @@
 
-
+class Zero():
+    name = "None"
 
 class Player:
     #Stats
@@ -11,13 +12,14 @@ class Player:
     crit = 10
 
     #Equipment
-    mainhand = 0
-    offhand = 0
-    head = 0
-    chest = 0
-    legs = 0
-    feet = 0
+    mainhand = Zero
+    offhand = Zero
+    head = Zero
+    chest = Zero
+    legs = Zero
+    feet = Zero
 
     #general info
     location = 0
     money = 100
+
