@@ -79,7 +79,7 @@ class Hamilton(Loc):
     def __init__(self):
         super().__init__()
         self.name = "Hamilton"
-        self.options = ["travel", "Inventory", "trade"]
+        self.options = ["stats", "travel", "Inventory", "trade"]
         self.traders = [traders.otto.name]
 
         #Variablen bearbeitet

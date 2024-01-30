@@ -23,6 +23,7 @@ du kannst:
         chosen = input()
         if chosen in self.player.location.options:
             if chosen == "travel":
+                print("Du bist hier:",Stadt.welt[self.player.location])
                 print("Wo willst du hin reisen? Du kannst zu:",Stadt.orte,"")
                 dest = input()
                 self.player.location.travel(Stadt.welt[dest])
@@ -38,6 +39,8 @@ du kannst:
                     self.Dialog()
                 else:
                     print("etwas ist fehlgeschlagen. Bitte probiere es erneut")
+            if chosen == "stats":
+                Player.Player.stats(Player.Player)
         self.Dialog()
 
 

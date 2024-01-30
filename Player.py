@@ -23,3 +23,18 @@ class Player:
     location = 0
     money = 100
 
+    def stats(self):
+        print("""Du befindest dich in""", self.location,"""
+[""",self.money,"""] münzen
+Level: [""",self.level,"""]
+Speed: [""",self.kmh,"""] kmh
+Hp: [""",self.hp,"""/""",self.maxhp,"""]
+Strength: [""",self.attack,"""]
+Critchance: [""",self.crit,"""]
+Waffe: [""",Player.waffe.name,"""]
+zweite Hand: [""",Player.offhand.name,"""]
+Helm: [""",Player.head.name,"""]
+Brustplatte: [""",Player.chest.name,"""]
+Hose: [""",Player.legs.name,"""]
+Schuhe: [""",Player.feet.name,"""]""")
+
