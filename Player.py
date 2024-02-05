@@ -87,3 +87,4 @@ Schuhe: [""",self.feet.name,"""]""")
         player.location = player.safespot
         print("Du hast 50% deiner Münzen verloren und bist wieder in deinem letzten besuchten Safespot aufgewacht.")
         player.money /= 2
+        player.hp = player.maxhp

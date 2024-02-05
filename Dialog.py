@@ -65,6 +65,8 @@ du kannst:
 
 
 dia = Mydialog()
-print("""Hallo Spieler, das Spiel ist sehr selbsterklärend also sag ich dir nur dass hier: Geh handeln.""")
+print("""
+________________________________________________________________________________________
+Hallo Spieler, das Spiel ist sehr selbsterklärend also sag ich dir nur dass hier: Geh handeln.""")
 dia.Dialog()
 

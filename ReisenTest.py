@@ -75,7 +75,7 @@ class Loc:
 
         print("Die Reise dauert etwa", round(tspent, 1), tkind)
         if tkind == "Stunden" and tspent >= 12:
-            self.bandits = round((tspent - 12) / 24,1)
+            self.bandits = round((tspent - 12) / 24) + 1
         elif tkind == "Tage":
             self.bandits = round(tspent)
         if self.bandits > 0:

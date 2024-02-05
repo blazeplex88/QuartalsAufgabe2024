@@ -6,7 +6,7 @@ class Weapons():
     def __init__(self):
         self.dmg = 0
         self.crit = 0
-        self.infi = False
+        self.infi = 0
 
 class Items():
 
@@ -16,7 +16,7 @@ class Items():
         self.hp = 0
         self.mp = 0
         self.wert = 0
-        self.infi = False
+        self.infi = 0
         self.type = "Usable"
 
     def Using(self, player):
@@ -42,7 +42,7 @@ class Rüstung():
         self.speed = 0
         self.wert = 0
         self.type = "Equip"
-        self.infi = False
+        self.infi = 0
 
     def Info(self):
             print("""name = """, self.name, """
@@ -201,7 +201,7 @@ class HealthPotion(Items):
         self.hp = 8
         self.mp = 1
         self.wert = 10
-        self.infi = True
+        self.infi = 7
 
 class Lederharnisch(Brustplatte):
 

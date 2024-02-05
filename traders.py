@@ -45,9 +45,7 @@ class Trader():
             else:
                 print("schade. Vieleicht gefällt ihnen ja etwas anderes?")
                 self.trade(player)
-            if Items.items[object].infi:
-                self.waren.append(object)
-            if self.waren.count() > 0:
+            if len(self.waren) > 0:
                 print("Möchten sie vlt noch etwas weiteres kaufen? [y/n]")
                 self.yesno = input()
                 if self.yesno == "y":
@@ -68,8 +66,8 @@ class Alchemist(Trader):
 
     def __init__(self):
         super().__init__()
-        self.waren = [Items.healthPotion.name]
-        self.name = "Gulichen the Alchemist"
+        self.waren = [Items.healthPotion.name, Items.healthPotion.name, Items.healthPotion.name, Items.healthPotion.name]
+        self.name = "Alchemist"
         self.extramessage = ""
 
 class Eric(Npcs):
@@ -90,6 +88,7 @@ Für den Preis von 60 Münzen kann ich dir eine besondere Schnittechnik für dei
                 player.skills.append(Skills.cleave.name)
                 player.actions.append("Skills")
                 print("Guter Deal. Tschüss")
+                player.money -= 60
             else:
                 print("Ich gebe dir keine Skills kostenlos. Zisch ab")
         elif yesno == "n":
