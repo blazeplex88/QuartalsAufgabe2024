@@ -1,5 +1,4 @@
 import Items
-from Player import Player
 
 inv = ["holzschwert", "steinschwert"]
 
@@ -8,33 +7,36 @@ inv = ["holzschwert", "steinschwert"]
 
 
 
-def Inventory():
+def Inventory(self,player):
     print("in deinem Inventar befindet sich:",inv,)
-    print("""Waffe: [""",Player.waffe.name,"""]
-zweite Hand: [""",Player.offhand.name,"""]
-Helm: [""",Player.head.name,"""]
-Brustplatte: [""",Player.chest.name,"""]
-Hose: [""",Player.legs.name,"""]
-Schuhe: [""",Player.feet.name,"""]""")
+    print("""Waffe: [""",self.mainhand.name,"""]
+zweite Hand: [""",self.offhand.name,"""]
+Helm: [""",self.head.name,"""]
+Brustplatte: [""",self.chest.name,"""]
+Hose: [""",self.legs.name,"""]
+Schuhe: [""",self.feet.name,"""]
+Geld: [""",self.money,"""]""")
     print("mit was möchtest du Interagieren?")
     choice = input()
     if choice in inv:
-        if Items.items[choice] == Player.waffe:
+        if Items.items[choice] == self.mainhand or Items.items[choice] == self.head or Items.items[choice] == self.chest or Items.items[choice] == self.legs or Items.items[choice] == self.feet:
             print("Willst du es abrüsten oder untersuchen?")
             action = input()
             if action == "abrüsten":
-                Items.items[choice].Unequip(Player.waffe)
+                Items.items[choice].Unequip(self.mainhand, self)
 
             elif action == "untersuchen":
                 Items.items[choice].Info()
             else:
                 print("Etwas ist fehlgeschlagen probiere es erneut")
                 Inventory()
+        elif Items.items[choice].type == "Usable":
+            Items.items[choice].Using(player)
         else:
             print("Willst du es ausrüsten oder untersuchen")
             action = input()
             if action == "ausrüsten":
-                Items.items[choice].Equip()
+                Items.items[choice].Equip(self)
             elif action == "untersuchen":
                 Items.items[choice].Info()
             else:
@@ -42,5 +44,4 @@ Schuhe: [""",Player.feet.name,"""]""")
                 Inventory()
     else:
         print("dieses Item ist entweder nicht im Inventar oder wurde falsch geschrieben")
-        Inventory()
 
