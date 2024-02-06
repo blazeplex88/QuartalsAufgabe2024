@@ -8,6 +8,7 @@ class Weapons():
         self.crit = 0
         self.infi = 0
 
+
 class Items():
 
     def __init__(self):
@@ -16,21 +17,26 @@ class Items():
         self.hp = 0
         self.mp = 0
         self.wert = 0
+        self.nahrung = 0
         self.infi = 0
-        self.type = "Usable"
+        self.type = "Consumable"
 
     def Using(self, player):
         player.hp += self.hp
         if player.hp > player.maxhp:
             player.hp = player.maxhp
-        player.mp += player.mp
+        player.mp += self.mp
         if player.mp > player.maxmp:
             player.mp = player.maxmp
-        print("Durch ",self.name," regenerierst du",self.hp,"Leben und ",self.mp,"Mana")
+        player.food += self.nahrung
+        if player.food > player.maxfood:
+            player.food = player.maxfood
+        print("Durch ", self.name, " regenerierst du", self.hp, "Leben und ", self.mp, "Mana")
         print("""Jetzt hast du 
-HP: [""",player.hp,"/",player.maxhp,"""]
-MP: [""",player.mp,"/",player.maxmp,"""]""")
+HP: [""", player.hp, "/", player.maxhp, """]
+MP: [""", player.mp, "/", player.maxmp, """]""")
         Inventory.inv.remove(self.name)
+
 
 class Rüstung():
 
@@ -45,10 +51,11 @@ class Rüstung():
         self.infi = 0
 
     def Info(self):
-            print("""name = """, self.name, """
+        print("""name = """, self.name, """
 Defense = """, self.defense, """
-Hp Boost = """, self.hp,"""
-Speed Boost = """,self.speed)
+Hp Boost = """, self.hp, """
+Speed Boost = """, self.speed)
+
 
 class Helm(Rüstung):
 
@@ -72,6 +79,8 @@ class Helm(Rüstung):
         player.hp += self.hp
         player.maxhp += self.hp
         player.kmh += self.speed
+
+
 class Brustplatte(Rüstung):
 
     def __init__(self):
@@ -94,6 +103,8 @@ class Brustplatte(Rüstung):
         player.hp += self.hp
         player.maxhp += self.hp
         player.kmh += self.speed
+
+
 class Hose(Rüstung):
 
     def __init__(self):
@@ -116,6 +127,8 @@ class Hose(Rüstung):
         player.hp += self.hp
         player.maxhp += self.hp
         player.kmh += self.speed
+
+
 class Schuhe(Rüstung):
 
     def __init__(self):
@@ -138,6 +151,7 @@ class Schuhe(Rüstung):
         player.hp += self.hp
         player.maxhp += self.hp
         player.kmh += self.speed
+
 
 class Sword(Weapons):
 
@@ -169,12 +183,14 @@ class Sword(Weapons):
 atk = """, self.dmg, """
 crit =""", self.crit)
 
+
 class Holzschwert(Sword):
 
     def __init__(self):
         super().__init__()
         self.name = "Holzschwert"
         self.wert = 1
+
 
 class Steinschwert(Sword):
 
@@ -185,6 +201,7 @@ class Steinschwert(Sword):
         self.crit = 9
         self.wert = 10
 
+
 class Eisenschwert(Sword):
     def __init__(self):
         super().__init__()
@@ -192,6 +209,7 @@ class Eisenschwert(Sword):
         self.dmg = 10
         self.crit = 10
         self.wert = 50
+
 
 class HealthPotion(Items):
 
@@ -203,6 +221,7 @@ class HealthPotion(Items):
         self.wert = 10
         self.infi = 7
 
+
 class Lederharnisch(Brustplatte):
 
     def __init__(self):
@@ -213,11 +232,23 @@ class Lederharnisch(Brustplatte):
         self.speed = 0
         self.wert = 60
 
+
+class KleineRation(Items):
+
+    def __init__(self):
+        super().__init__()
+        self.name = "Kleine Ration"
+        self.nahrung = 3
+        self.wert = 5
+        self.hp = 1
+
+
 holzschwert = Holzschwert()
 steinschwert = Steinschwert()
 eisenschwert = Eisenschwert()
 lederharnisch = Lederharnisch()
 healthPotion = HealthPotion()
+kleineRation = KleineRation()
 
 items = dict()
 items[holzschwert.name] = holzschwert
@@ -225,3 +256,6 @@ items[steinschwert.name] = steinschwert
 items[eisenschwert.name] = eisenschwert
 items[lederharnisch.name] = lederharnisch
 items[healthPotion.name] = healthPotion
+items[kleineRation.name] = kleineRation
+
+

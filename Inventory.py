@@ -30,7 +30,7 @@ Geld: [""",self.money,"""]""")
             else:
                 print("Etwas ist fehlgeschlagen probiere es erneut")
                 Inventory()
-        elif Items.items[choice].type == "Usable":
+        elif Items.items[choice].type == "Consumable":
             Items.items[choice].Using(player)
         else:
             print("Willst du es ausrüsten oder untersuchen")

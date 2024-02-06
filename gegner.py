@@ -3,6 +3,7 @@ import random
 import Skills
 
 
+
 class Gegner():
 
     def __init__(self):
@@ -19,13 +20,16 @@ class Gegner():
         self.wert = 5
 
     def fight(self,player):
+        player.foodused = -0.2
         self.lvl = player.level
         if self.ini <= player.ini:
             self.pturn(player)
         elif self.ini > player.ini:
             self.eturn(player)
+        player.food -= player.foodused
 
     def pturn(self,player):
+        player.foodused += 0.2
         if self.hp < 1:
             self.win(player)
         elif player.hp < 1:
@@ -58,10 +62,46 @@ class Gegner():
                         Skills.usages[skill].Use(self, player)
                         self.truedefense = 0
                         self.eturn(player)
-                else:
-                    print("Das geht nicht")
-                    self.pturn(player)
+            else:
+                print("Das geht nicht")
+                self.pturn(player)
 
+    def pexturn(self,player):
+        player.foodused += 0.2
+        if self.hp < 1:
+            self.win(player)
+        elif player.hp < 1:
+            player.death(player)
+        else:
+            print("Du hast",player.hp,"/",player.maxhp,"hp")
+            print("Du kannst",player.actions)
+            self.choice = input()
+            if self.choice in player.actions:
+                if self.choice == "attack":
+                    self.damage = (player.attack - self.truedefense)
+                    a = random.randint(1, 100)
+                    if a <= player.crit:
+                        self.damage *= 2
+                        print("Kritischer Treffer")
+                    if self.damage < 0:
+                        self.damage = 0
+                    self.hp -= self.damage
+                    print("Du hast dem",self.name,",",self.damage,"Schaden zugefügt.",self.hp,"/",self.maxhp,"übrig.")
+                    self.truedefense = 0
+                elif self.choice == "defend":
+                    player.truedefense = player.defense
+                    print("Du verteidigst dich")
+                    self.eturn(player)
+                elif self.choice == "Skills":
+                    print("Welchen Skill willst du nutzen? Du hast:",player.skills)
+                    skill = input()
+                    if skill in player.skills:
+                        Skills.usages[skill].Use(self, player)
+                        self.truedefense = 0
+                        self.eturn(player)
+            else:
+                print("Das geht nicht")
+                self.pturn(player)
 
 
     def eturn(self,player):
@@ -73,16 +113,22 @@ class Gegner():
             self.act = random.choice(self.actions)
             if self.act == "attack":
                 self.damage = (self.atk - player.truedefense)
-                if self.damage < 0:
+                if self.damage <= 0:
                     self.damage = 0
-                player.hp -= self.damage
-                player.truedefense = 0
-                print("Der",self.name,"greift dich für",self.damage,"an. Dir verbleiben noch",player.hp,"/",player.maxhp,"hp")
+                    print("Du hast den Angriff erfolgreich abgewehrt")
+                    print("Der Gegner ist nun verwundbar")
+                    self.pexturn(player)
+                    player.foodused -= 0.2
+                    self.truedefense = 0
+                else:
+                    player.hp -= self.damage
+                    print("Der",self.name,"greift dich für",self.damage,"an. Dir verbleiben noch",player.hp,"/",player.maxhp,"hp")
                 self.pturn(player)
             elif self.act == "defend":
                 self.truedefense = self.defense
                 print("Der gegner verteidigt sich")
                 self.pturn(player)
+        player.truedefense = 0
 
     def win(self,player):
         player.exp += self.exp

@@ -24,6 +24,9 @@ class Player:
     defense = 5
     truedefense = 0
     crit = 10
+    food = 30
+    maxfood = 30
+    foodused = 0
     ini = 5
     actions = ["attack", "defend"]
     skills = list()
@@ -46,11 +49,21 @@ class Player:
 [""",self.money,"""] münzen
 Level: [""",self.level,"""]
 Exp: [""",self.exp,"""/""",self.expneeded,"""
+Defense: [""",self.defense,"""
+___________________________________________
 Speed: [""",self.kmh,"""] kmh
 Hp: [""",self.hp,"""/""",self.maxhp,"""]
 Mp: [""",self.mp,"""/""",self.maxmp,"""]
 Strength: [""",self.attack,"""]
 Critchance: [""",self.crit,"""]""")
+        if self.food <= 10:
+            print("Du bist sehr hungrig")
+        elif self.food <= 20:
+            print("Du hast Hunger")
+        elif self.food <= 30:
+            print("Ich bin satt")
+        elif self.food > 30:
+            print("Du bist komplett voll")
         if self.skillpoints > 0:
             print("Welchen Stat möchtest du verbessern?")
             skill = input()

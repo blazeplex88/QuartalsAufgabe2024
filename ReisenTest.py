@@ -1,4 +1,7 @@
 from math import sqrt
+
+import Inventory
+import Items
 # hier importieren wir die funktion des Wurzelziehens aus der Mathe datei die in pycharm mit installiert ist
 
 import Player
@@ -82,10 +85,42 @@ class Loc:
             print("Auf deiner Reise wirst du Nachts von Banditen überfallen")
         while self.bandits > 0:
             gegner.bandit.fight(player)
+            player.food -= 6
+            print("Am nächsten Morgen benötigst du Nahrung.")
+            self.loop = True
+            while self.loop:
+                if player.food <= 10:
+                    print("Du bist sehr hungrig")
+                elif player.food <= 20:
+                    print("Du hast Hunger")
+                elif player.food <= 30:
+                    print("Du bist satt")
+                elif player.food > 30:
+                    print("Du bist komplett voll")
+                print("Was aus deinem Inventar möchtest du Essen? [option/n]")
+                print(Inventory.inv)
+                self.chosen = input()
+                if self.chosen == "n":
+                    self.loop = False
+                if Items.items[self.chosen].type == "Consumable":
+                    print("""Dieses Objekt gibt dir:
+""",Items.items[self.chosen].nahrung,""" Nahrung
+""",Items.items[self.chosen].hp,""" Hp
+""",Items.items[self.chosen].mp,""" Mp
+willst du es verbrauchen? [y/n]""")
+                    self.yesno = input()
+                    if self.yesno == "y":
+                        Items.items[self.chosen].Using(player)
+                        self.loop = False
+                    else:
+                        self.loop = True
+                else:
+                    self.loop = True
             if self.bandits < 1:
                 self.bandits -= self.bandits
             else:
                 self.bandits -= 1
+
         # Wie lange die Reise dauert, wird durch ein gerundetes Ergebnis und das vorher bestimmte tkind dargestellt
 
 

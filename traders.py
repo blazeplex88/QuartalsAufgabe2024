@@ -23,15 +23,31 @@ class Trader():
         object = input()
         if object in self.waren:
             print("Dieses Objekt kostet:", Items.items[object].wert, "Silber. Sie haben momentan:", player.money, "Silber"
-                  "Wollen sie es kaufen? y/n")
+                  " wollen sie es kaufen? y/n")
             self.yn = input()
             if self.yn == "y":
                 if Items.items[object].wert <= player.money:
                     self.waren.remove(object)
                     player.money -= Items.items[object].wert
+                    if Items.items[object].type == "Food":
+                        player.foodint += Items.items[object].nahrung
                     Inventory.inv.append(object)
+                    if self.waren.count(object) > 1:
+                        print("Wie viel möchtest du davon kaufen?")
+                        counter = input()
+                        rcounter = int(counter)
+                        monmul = 1
+
+
+                        if rcounter > self.waren.count(object):
+                            rcounter = self.waren.count(object)
+                        while rcounter > 1:
+                            Inventory.inv.append(object)
+                            self.waren.remove(object)
+                            rcounter -= 1
+                            monmul +=1
                     print("der Handel war erfolgreich")
-                    print("[Geld-", Items.items[object].wert, "]")
+                    print("[Geld-", Items.items[object].wert * monmul, "]")
                     print("[", object, "ins Inventar hinzugefügt]")
                     print(self.extramessage)
                     if Items.items[object].type == "Equip":
@@ -40,6 +56,7 @@ class Trader():
                         self.yesno = input()
                         if self.yesno == "y":
                             Items.items[object].Equip(player)
+
                 else:
                     print("Du bist zu arm, komm wieder wenn du einen Job oder so was gefunden hast")
             else:
