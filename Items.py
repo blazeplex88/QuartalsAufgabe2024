@@ -238,7 +238,7 @@ class KleineRation(Items):
     def __init__(self):
         super().__init__()
         self.name = "Kleine Ration"
-        self.nahrung = 3
+        self.nahrung = 7
         self.wert = 5
         self.hp = 1
 

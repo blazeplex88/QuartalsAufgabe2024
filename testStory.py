@@ -31,11 +31,17 @@ def Progress(player):
         print("öffne den Statscreen um deine Skillpunkte zu verteilen")
         player.skillpoints += 3
     if "Eisenschwert" in Inventory.inv and "Cave" not in Stadt.orte.orte:
+
         print("Du kannst jetzt zur Cave reisen")
         Stadt.orte.orte.append("Cave")
         loop = 5
         traders.otto.extramessage = ""
+        print("Otto hat neue Waren")
         while loop > 0:
             traders.otto.waren.append(Items.kleineRation.name)
             loop -= 1
+    if "Lederharnisch" in Inventory.inv and "Fort" not in Stadt.orte.orte:
+        print("In der Lederrüstung findest du einen Schlüssel für eine Burg")
+        print("Du kannst jetzt zu Fort reisen")
+        Stadt.orte.orte.append("Fort")
 

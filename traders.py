@@ -19,6 +19,7 @@ class Trader():
         self.extramessage = ""
 
     def trade(self, player):
+        monmul = 1
         print("dies sind meine Waren:", self.waren, "möchten sie etwas kaufen?")
         object = input()
         if object in self.waren:
@@ -28,7 +29,6 @@ class Trader():
             if self.yn == "y":
                 if Items.items[object].wert <= player.money:
                     self.waren.remove(object)
-                    player.money -= Items.items[object].wert
                     if Items.items[object].type == "Food":
                         player.foodint += Items.items[object].nahrung
                     Inventory.inv.append(object)
@@ -36,20 +36,22 @@ class Trader():
                         print("Wie viel möchtest du davon kaufen?")
                         counter = input()
                         rcounter = int(counter)
-                        monmul = 1
-
+                        monmul = 0
 
                         if rcounter > self.waren.count(object):
                             rcounter = self.waren.count(object)
-                        while rcounter > 1:
+                        while rcounter >= 1:
                             Inventory.inv.append(object)
                             self.waren.remove(object)
                             rcounter -= 1
-                            monmul +=1
+                            monmul += 1
+                    else:
+                        monmul = 1
                     print("der Handel war erfolgreich")
                     print("[Geld-", Items.items[object].wert * monmul, "]")
                     print("[", object, "ins Inventar hinzugefügt]")
                     print(self.extramessage)
+                    player.money -= Items.items[object].wert * monmul
                     if Items.items[object].type == "Equip":
                         print("[Möchtest du", object, "ausrüsten?]")
                         print("[y/n]")
@@ -104,6 +106,7 @@ Für den Preis von 60 Münzen kann ich dir eine besondere Schnittechnik für dei
                 print("[Du hast den Skill {Cleave} gelernt]")
                 player.skills.append(Skills.cleave.name)
                 player.actions.append("Skills")
+                player.exactions.append("Skills")
                 print("Guter Deal. Tschüss")
                 player.money -= 60
             else:

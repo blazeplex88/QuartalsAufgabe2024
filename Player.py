@@ -29,6 +29,7 @@ class Player:
     foodused = 0
     ini = 5
     actions = ["attack", "defend"]
+    exactions = ["attack"]
     skills = list()
 
     #Equipment
@@ -43,6 +44,7 @@ class Player:
     location = 0
     money = 100
     safespot = 0
+    waves = 1
 
     def stats(self):
         print("""Du befindest dich in""",self.location.name,"""

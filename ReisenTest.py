@@ -26,6 +26,8 @@ class Loc:
         self.traders = list()
         self.gegner = list()
         self.npcs = list()
+        self.waves = 1
+        self.boss = 0
         # die Variablen der Instanzen und dieser Klasse
 
     def travel(self, dest, player):
@@ -102,7 +104,7 @@ class Loc:
                 self.chosen = input()
                 if self.chosen == "n":
                     self.loop = False
-                if Items.items[self.chosen].type == "Consumable":
+                elif Items.items[self.chosen].type == "Consumable":
                     print("""Dieses Objekt gibt dir:
 """,Items.items[self.chosen].nahrung,""" Nahrung
 """,Items.items[self.chosen].hp,""" Hp
@@ -144,7 +146,7 @@ class George(Loc):
         self.name = "George"
         self.x = 60
         self.y = 60
-        self.options = ["travel", "Inventory", "talk", "trade"]
+        self.options = ["stats","travel", "Inventory", "talk", "trade"]
         self.npcs = [traders.eric.name]
         self.traders = [traders.marlon.name]
 
@@ -160,9 +162,24 @@ class Cave(Loc):
         self.gegner = [gegner.goblin]
 
 
+class Fort(Loc):
+
+    def __init__(self):
+        super().__init__()
+        self.name = "Fort"
+        self.x = 70
+        self.y = 74
+        self.z = 2
+        self.boss = gegner.king
+        self.waves = 4
+        self.options = ["travel", "Inventory", "explore"]
+        self.gegner = [gegner.ritter]
+
+
 cave = Cave()
 hamilton = Hamilton()
 george = George()
+fort = Fort()
 # Instanzen der Beiden soeben erstellten Klassen
 
 

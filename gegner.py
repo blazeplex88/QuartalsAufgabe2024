@@ -31,7 +31,18 @@ class Gegner():
     def pturn(self,player):
         player.foodused += 0.2
         if self.hp < 1:
-            self.win(player)
+            self.hp = self.maxhp
+            player.waves += 1
+            if player.location.waves > player.waves:
+                if player.waves == player.location.waves - 1:
+                    player.location.boss.fight(player)
+                else:
+                    enemy = random.choice(player.location.gegner)
+                    print("Der Gegner hatte Verstärkung. Herbeikommt", enemy.name, "Er/sie/es greift dich an")
+                    enemy.fight(player)
+            elif player.waves >= player.location.waves:
+                player.waves = 1
+                self.win(player)
         elif player.hp < 1:
             player.death(player)
         else:
@@ -73,7 +84,7 @@ class Gegner():
         elif player.hp < 1:
             player.death(player)
         else:
-            print("Du hast",player.hp,"/",player.maxhp,"hp")
+            print("Extra Zug")
             print("Du kannst",player.actions)
             self.choice = input()
             if self.choice in player.actions:
@@ -106,7 +117,19 @@ class Gegner():
 
     def eturn(self,player):
         if self.hp < 1:
-            self.win(player)
+            player.waves += 1
+            self.hp = self.maxhp
+            if player.location.waves > player.waves:
+                if player.waves == player.location.waves - 1:
+                    print("Der Boss erscheint. ",player.location.boss.name," schaut auf dich herab")
+                    player.location.boss.fight(player)
+                else:
+                    enemy = random.choice(player.location.gegner)
+                    print("Der Gegner hatte Verstärkung. Herbeikommt", enemy.name, "Er/sie/es greift dich an")
+                    enemy.fight(player)
+            elif player.waves >= player.location.waves:
+                player.waves = 1
+                self.win(player)
         elif player.hp < 1:
             player.death(player)
         else:
@@ -115,18 +138,21 @@ class Gegner():
                 self.damage = (self.atk - player.truedefense)
                 if self.damage <= 0:
                     self.damage = 0
+                    print("Der Gegner greift dich an.")
                     print("Du hast den Angriff erfolgreich abgewehrt")
                     print("Der Gegner ist nun verwundbar")
+                    player.truedefense = 0
                     self.pexturn(player)
                     player.foodused -= 0.2
-                    self.truedefense = 0
                 else:
                     player.hp -= self.damage
                     print("Der",self.name,"greift dich für",self.damage,"an. Dir verbleiben noch",player.hp,"/",player.maxhp,"hp")
+                self.truedefense = 0
                 self.pturn(player)
             elif self.act == "defend":
                 self.truedefense = self.defense
                 print("Der gegner verteidigt sich")
+                player.truedefense = 0
                 self.pturn(player)
         player.truedefense = 0
 
@@ -173,8 +199,32 @@ class Bandit(Gegner):
         self.exp = 20 + self.lvl
         self.wert = 40 + self.lvl
 
+class Ritter(Gegner):
+
+    def __init__(self):
+        super().__init__()
+        self.name = "Ritter"
+        self.hp = 45 + self.lvl * 2
+        self.defense = 15 + self.lvl * 2
+        self.maxhp = 45 + self.lvl * 2
+        self.atk = 7 + self.lvl * 2
+        self.exp = 25 + self.lvl
+        self.wert = 50 + self.lvl
+
+class King(Gegner):
+
+    def __init__(self):
+        super().__init__()
+        self.name = "König"
+        self.hp = 70 + self.lvl * 2
+        self.defense = 17 + self.lvl * 2
+        self.maxhp = 70 + self.lvl * 2
+        self.atk = 9 + self.lvl * 2
+        self.exp = 25 + self.lvl
+        self.wert = 50 + self.lvl
+
 goblin = Goblin()
 orc = Orc()
 bandit = Bandit()
-
-
+ritter = Ritter()
+king = King()

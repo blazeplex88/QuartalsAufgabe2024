@@ -20,6 +20,9 @@ class Orte():
         self.welt[ReisenTest.cave.name] = ReisenTest.cave
         self.welt[ReisenTest.cave] = ReisenTest.cave.name
 
+        self.welt[ReisenTest.fort.name] = ReisenTest.fort
+        self.welt[ReisenTest.fort] = ReisenTest.fort.name
+
 orte = Orte()
 
 
