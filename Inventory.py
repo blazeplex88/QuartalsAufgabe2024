@@ -1,6 +1,6 @@
 import Items
 
-inv = ["holzschwert", "steinschwert"]
+inv = [Items.holzschwert.name, Items.steinschwert.name]
 
 
 

@@ -21,6 +21,8 @@ class Player:
     maxhp = 10
     mp = 10
     maxmp = 10
+    stamina = 6
+    maxstamina = 6
     defense = 5
     truedefense = 0
     crit = 10
@@ -47,17 +49,21 @@ class Player:
     waves = 1
 
     def stats(self):
-        print("""Du befindest dich in""",self.location.name,"""
+        print("""
+Du befindest dich in""",self.location.name,"""
 [""",self.money,"""] münzen
 Level: [""",self.level,"""]
 Exp: [""",self.exp,"""/""",self.expneeded,"""
+
 Defense: [""",self.defense,"""
 ___________________________________________
 Speed: [""",self.kmh,"""] kmh
 Hp: [""",self.hp,"""/""",self.maxhp,"""]
 Mp: [""",self.mp,"""/""",self.maxmp,"""]
+Stamina: [""",self.stamina,"""/""",self.maxstamina,"""]
 Strength: [""",self.attack,"""]
 Critchance: [""",self.crit,"""]""")
+
         if self.food <= 10:
             print("Du bist sehr hungrig")
         elif self.food <= 20:
@@ -83,8 +89,12 @@ Critchance: [""",self.crit,"""]""")
             elif skill == "Strength":
                 self.attack += 1
                 self.skillpoints -= 1
-            elif skill == "Crit":
-                self.crit += 1
+            elif skill == "Critchance":
+                self.crit += 0.5
+                self.skillpoints -= 1
+            elif skill == "Stamina":
+                self.stamina += 1
+                self.maxstamina += 1
                 self.skillpoints -= 1
             self.stats()
 
