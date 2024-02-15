@@ -1,13 +1,13 @@
 import Items
 
-inv = [Items.holzschwert.name, Items.steinschwert.name]
+inv = list()
 
 
 
 
 
 
-def Inventory(self,player):
+def Inventory(self, player):
     print("in deinem Inventar befindet sich:",inv,)
     print("""Waffe: [""",self.mainhand.name,"""]
 zweite Hand: [""",self.offhand.name,"""]
@@ -41,7 +41,7 @@ Geld: [""",self.money,"""]""")
                 Items.items[choice].Info()
             else:
                 print("Etwas ist fehlgeschlagen probiere es erneut")
-                Inventory()
+                Inventory(self, player)
     else:
         print("dieses Item ist entweder nicht im Inventar oder wurde falsch geschrieben")
 

@@ -5,6 +5,7 @@ import Items
 # hier importieren wir die funktion des Wurzelziehens aus der Mathe datei die in pycharm mit installiert ist
 
 import Player
+import Stadt
 import gegner
 import traders
 
@@ -26,8 +27,10 @@ class Loc:
         self.traders = list()
         self.gegner = list()
         self.npcs = list()
+        self.discoveries = list()
         self.waves = 1
         self.boss = 0
+        self.searchdict = dict()
         # die Variablen der Instanzen und dieser Klasse
 
     def travel(self, dest, player):
@@ -106,9 +109,9 @@ class Loc:
                     self.loop = False
                 elif Items.items[self.chosen].type == "Consumable":
                     print("""Dieses Objekt gibt dir:
-""",Items.items[self.chosen].nahrung,""" Nahrung
-""",Items.items[self.chosen].hp,""" Hp
-""",Items.items[self.chosen].mp,""" Mp
+""", Items.items[self.chosen].nahrung, """ Nahrung
+""", Items.items[self.chosen].hp, """ Hp
+""", Items.items[self.chosen].mp, """ Mp
 willst du es verbrauchen? [y/n]""")
                     self.yesno = input()
                     if self.yesno == "y":
@@ -124,6 +127,16 @@ willst du es verbrauchen? [y/n]""")
                 self.bandits -= 1
 
         # Wie lange die Reise dauert, wird durch ein gerundetes Ergebnis und das vorher bestimmte tkind dargestellt
+
+    def Search(self, player):
+        print("""Hier gibt es:
+""", self.discoveries, """
+Was möchtest du untersuchen?""")
+        search = input()
+        if search in self.discoveries:
+            self.searchdict[search].searching(self)
+        else:
+            print("Das geht hier nicht")
 
 
 class Hamilton(Loc):
@@ -146,7 +159,7 @@ class George(Loc):
         self.name = "George"
         self.x = 60
         self.y = 60
-        self.options = ["stats","travel", "Inventory", "talk", "trade"]
+        self.options = ["stats", "travel", "Inventory", "talk", "trade"]
         self.npcs = [traders.eric.name]
         self.traders = [traders.marlon.name]
 
@@ -176,11 +189,59 @@ class Fort(Loc):
         self.gegner = [gegner.ritter]
 
 
+class Hutte(Loc):
+
+    class Tisch():
+        def searching(self):
+            print("Auf dem Tisch liegt eine Karte. Möchtest du sie aufheben?")
+            yn = input()
+            if yn == "y":
+                print("Die Karte zeigt die Nahe umgebung und du bemerkst das es wohl eine Stadt in deiner Nähe gibt.")
+                Stadt.orte.orte.append("Hamilton")
+
+    class Truhe():
+        def searching(self):
+            print("In einer Ecke der Hütte findest du eine Truhe. Möchtest du versuchen sie zu öffnen?")
+            yn = input()
+            if yn == "y":
+                print("In der Truhe liegt ein altes rostiges Schwert und ein Schlüssel. Du hebst beides auf.")
+                Inventory.inv.append("Altes Schwert")
+                Inventory.inv.append("Schlüssel")
+
+    class Door:
+        def __init__(self):
+            self.Doorunlock = None
+
+        def searching(self):
+            if "Schlüssel" in Inventory.inv:
+                print("Möchtest du die Tür aufschließen? [y/n]")
+                yn = input()
+                if yn == "y":
+                    self.Doorunlock = True
+            else:
+                print("Die Tür ist abgeschlossen.")
+
+    def __init__(self):
+        super().__init__()
+        self.name = "Hütte"
+        self.x = -20
+        self.y = -30
+        self.z = 1
+        self.Doorunlock = False
+        self.waves = 0
+        self.options = ["Inventory", "search"]
+        self.discoveries = ["Tisch", "Truhe", "Tür"]
+        self.searchdict["Tür"] = self.Door
+        self.searchdict["Truhe"] = self.Truhe
+        self.searchdict["Tisch"] = self.Tisch
+
+
 cave = Cave()
 hamilton = Hamilton()
 george = George()
 fort = Fort()
-# Instanzen der Beiden soeben erstellten Klassen
+hutte = Hutte()
+# Instanzen der beiden soeben erstellten Klassen
 
 
 # hamilton.travel(george)

@@ -13,6 +13,10 @@ hamiltonfirst = True
 
 
 def Progress(player):
+    if ReisenTest.hutte.Doorunlock:
+        player.location.options.append("travel")
+        player.location.discoveries.remove("Tür")
+        ReisenTest.hutte.Doorunlock = False
     if player.level >= 2 and ReisenTest.george.name not in Stadt.orte.orte:
         Stadt.orte.orte.append(ReisenTest.george.name)
         print("Du kannst jetzt nach George Reisen")

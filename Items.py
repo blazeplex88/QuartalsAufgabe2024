@@ -188,7 +188,7 @@ class Holzschwert(Sword):
 
     def __init__(self):
         super().__init__()
-        self.name = "Holzschwert"
+        self.name = "Altes Schwert"
         self.wert = 1
 
 

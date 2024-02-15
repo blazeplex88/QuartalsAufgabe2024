@@ -1,7 +1,6 @@
 import ReisenTest
 
 
-
 class Orte():
 
     def __init__(self):
@@ -12,7 +11,6 @@ class Orte():
 
         self.welt[ReisenTest.hamilton.name] = ReisenTest.hamilton
         self.welt[ReisenTest.hamilton] = ReisenTest.hamilton.name
-        self.orte.append("Hamilton")
 
         self.welt[ReisenTest.george.name] = ReisenTest.george
         self.welt[ReisenTest.george] = ReisenTest.george.name
@@ -23,8 +21,9 @@ class Orte():
         self.welt[ReisenTest.fort.name] = ReisenTest.fort
         self.welt[ReisenTest.fort] = ReisenTest.fort.name
 
+        self.welt[ReisenTest.hutte.name] = ReisenTest.hutte
+        self.welt[ReisenTest.hutte] = ReisenTest.hutte.name
+        self.orte.append("Hütte")
+
+
 orte = Orte()
-
-
-
-

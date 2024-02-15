@@ -13,9 +13,7 @@ import traders
 class Mydialog():
     def __init__(self):
         self.player = Player.Player()
-        self.player.location = ReisenTest.hamilton
-
-        Items.holzschwert.Equip(self.player)
+        self.player.location = ReisenTest.hutte
 
     def Dialog(self):
         print("____________________________________________")
@@ -59,6 +57,8 @@ du kannst:
                 self.chosennpc = input()
                 if self.chosennpc in self.player.location.npcs:
                     traders.npcs[self.chosennpc].talk(self.player)
+            if chosen == "search":
+                self.player.location.Search(self.player)
         else:
             print("Das kannst du hier nicht machen.")
         self.Dialog()
