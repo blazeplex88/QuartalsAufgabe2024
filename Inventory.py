@@ -24,14 +24,18 @@ Geld: [""",self.money,"""]""")
             action = input()
             if action == "abrüsten":
                 Items.items[choice].Unequip(self.mainhand, self)
-
             elif action == "untersuchen":
                 Items.items[choice].Info()
             else:
                 print("Etwas ist fehlgeschlagen probiere es erneut")
-                Inventory()
+                Inventory(self, player)
         elif Items.items[choice].type == "Consumable":
             Items.items[choice].Using(player)
+        elif Items.items[choice].type == "Useless":
+            print("willst du es untersuchen?")
+            yn = input()
+            if yn == "y":
+                Items.items[choice].Info()
         else:
             print("Willst du es ausrüsten oder untersuchen")
             action = input()

@@ -3,6 +3,7 @@ import random
 import Inventory
 import Items
 import Player
+import Quests
 import ReisenTest
 import Stadt
 import testStory
@@ -16,6 +17,9 @@ class Mydialog():
         self.player.location = ReisenTest.hutte
 
     def Dialog(self):
+        for x in Quests.quests:
+            x.check_quest(self.player)
+        self.player.enemiesKilled.clear()
         print("____________________________________________")
         testStory.Progress(self.player)
         print("""
@@ -30,8 +34,10 @@ du kannst:
                 print("Wo willst du hin reisen? Du kannst zu:",Stadt.orte.orte,"")
                 dest = input()
                 if dest in Stadt.orte.orte:
+                    Stadt.orte.orte.append(self.player.location.name)
                     self.player.location.travel(Stadt.orte.welt[dest],self.player)
                     self.player.location = Stadt.orte.welt[dest]
+                    Stadt.orte.orte.remove(self.player.location.name)
                 else:
                     print("Da passt was nicht")
             if chosen == "Inventory":
@@ -67,7 +73,8 @@ du kannst:
 dia = Mydialog()
 print("""
 ________________________________________________________________________________________
-Hallo Spieler, das Spiel ist sehr selbsterklärend also sag ich dir nur dass hier: Geh handeln.""")
+Du erwachst in einer nur leicht beleuchteten Hütte die du auf etwa 5 Quadratmeter schätzt.
+Schnell schwingst du dich auf deine Beine und guckst dich um""")
 dia.Dialog()
 
 

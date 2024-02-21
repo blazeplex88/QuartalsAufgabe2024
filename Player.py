@@ -23,7 +23,7 @@ class Player:
     maxmp = 10
     stamina = 6
     maxstamina = 6
-    defense = 5
+    defense = 1
     truedefense = 0
     crit = 10
     food = 30
@@ -44,9 +44,10 @@ class Player:
 
     #general info
     location = 0
-    money = 100
+    money = 0
     safespot = 0
     waves = 1
+    enemiesKilled = list()
 
     def stats(self):
         print("""

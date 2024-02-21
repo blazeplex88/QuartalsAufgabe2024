@@ -162,6 +162,7 @@ class Gegner():
         print("Du hast gewonnen")
         print("[Du erhältst",self.exp,"Erfahrungspunkte]")
         print("[Du erhältst",self.wert,"Münzen]")
+        player.enemiesKilled.append(self.name)
         self.hp = self.maxhp
 
 class Goblin(Gegner):
@@ -199,6 +200,17 @@ class Bandit(Gegner):
         self.exp = 20 + self.lvl
         self.wert = 40 + self.lvl
 
+class Ratte(Gegner):
+
+    def __init__(self):
+        super().__init__()
+        self.name = "Ratte"
+        self.hp = 5 + self.lvl * 2
+        self.maxhp = 5 + self.lvl * 2
+        self.atk = 2 + self.lvl * 2
+        self.exp = 2 + self.lvl
+        self.wert = 3 + self.lvl
+
 class Ritter(Gegner):
 
     def __init__(self):
@@ -228,3 +240,4 @@ orc = Orc()
 bandit = Bandit()
 ritter = Ritter()
 king = King()
+ratte = Ratte()

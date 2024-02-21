@@ -23,7 +23,9 @@ class Orte():
 
         self.welt[ReisenTest.hutte.name] = ReisenTest.hutte
         self.welt[ReisenTest.hutte] = ReisenTest.hutte.name
-        self.orte.append("Hütte")
+
+        self.welt[ReisenTest.wiese.name] = ReisenTest.wiese
+        self.welt[ReisenTest.wiese] = ReisenTest.wiese.name
 
 
 orte = Orte()

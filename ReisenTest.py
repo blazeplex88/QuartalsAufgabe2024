@@ -5,6 +5,7 @@ import Items
 # hier importieren wir die funktion des Wurzelziehens aus der Mathe datei die in pycharm mit installiert ist
 
 import Player
+import Quests
 import Stadt
 import gegner
 import traders
@@ -141,12 +142,35 @@ Was möchtest du untersuchen?""")
 
 class Hamilton(Loc):
     # Eine Instanz der Loc Klasse namens Hamilton wird erstellt
+    class Gilde:
+
+        def searching(self):
+            print("""Du stehst vor einem großen Gebäude das in einem wesentlich besseren Zustand ist als der Rest der "
+Stadt zu sein scheint.
+Um dieses Gebäude versammeln sich viele verschiedene Personen.
+Möchtest du es betreten? [y/n]""")
+            yn = input()
+            if yn == "y":
+                print("""Du betrittst die Gilde
+Innerhalb befinden sich noch mehr Menschen von denen viele Waffen besitzen, welche um einiges 
+wertvoller aussehen als deine eigene.
+Eine Große Menschenmenge hat sich um eine Art tafel gebildet. Du drängst dich durch die menge 
+und siehst das eine große Anzahl an zu erledigenden Aufgaben an der Tafel hängen. Du überlegst
+das die meisten vermutlich zu schwer für dein momentanes können ist und wählst die am 
+einfachsten aussehende Aufgabe""")
+                print(Quests.ratten.name)
+                Quests.ratten.accept_quest()
+                print("Auf der Rückseite findest du eine Karte zum Jagdort")
+                print("Du kannst jetzt zur Verseuchten Wiese reisen")
+                Stadt.orte.orte.append("Wiese")
 
     def __init__(self):
         super().__init__()
         self.name = "Hamilton"
-        self.options = ["stats", "travel", "Inventory", "trade"]
+        self.options = ["stats", "travel", "Inventory", "trade", "search"]
         self.traders = [traders.otto.name, traders.alchemist.name]
+        self.discoveries = ["Gilde"]
+        self.searchdict["Gilde"] = self.Gilde
 
         # Variablen bearbeitet
 
@@ -190,16 +214,18 @@ class Fort(Loc):
 
 
 class Hutte(Loc):
+    class Tisch:
 
-    class Tisch():
         def searching(self):
-            print("Auf dem Tisch liegt eine Karte. Möchtest du sie aufheben?")
-            yn = input()
-            if yn == "y":
-                print("Die Karte zeigt die Nahe umgebung und du bemerkst das es wohl eine Stadt in deiner Nähe gibt.")
-                Stadt.orte.orte.append("Hamilton")
+            if "Hamilton" not in Stadt.orte.orte:
+                print("Auf dem Tisch liegt eine Karte. Möchtest du sie aufheben?")
+                yn = input()
+                if yn == "y":
+                    print(
+                        "Die Karte zeigt die Nahe umgebung und du bemerkst das es wohl eine Stadt in deiner Nähe gibt.")
+                    Stadt.orte.orte.append("Hamilton")
 
-    class Truhe():
+    class Truhe:
         def searching(self):
             print("In einer Ecke der Hütte findest du eine Truhe. Möchtest du versuchen sie zu öffnen?")
             yn = input()
@@ -235,12 +261,24 @@ class Hutte(Loc):
         self.searchdict["Truhe"] = self.Truhe
         self.searchdict["Tisch"] = self.Tisch
 
+class Wiese(Loc):
+
+    def __init__(self):
+        super().__init__()
+        self.name = "Wiese"
+        self.x = 3
+        self.y = -2
+        self.z = 0
+        self.options = ["travel", "Inventory", "explore"]
+        self.gegner = [gegner.ratte]
+
 
 cave = Cave()
 hamilton = Hamilton()
 george = George()
 fort = Fort()
 hutte = Hutte()
+wiese = Wiese()
 # Instanzen der beiden soeben erstellten Klassen
 
 
