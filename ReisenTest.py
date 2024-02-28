@@ -163,11 +163,12 @@ einfachsten aussehende Aufgabe""")
                 print("Auf der Rückseite findest du eine Karte zum Jagdort")
                 print("Du kannst jetzt zur Verseuchten Wiese reisen")
                 Stadt.orte.orte.append("Wiese")
+                hamilton.discoveries.remove("Gilde")
 
     def __init__(self):
         super().__init__()
         self.name = "Hamilton"
-        self.options = ["stats", "travel", "Inventory", "trade", "search"]
+        self.options = ["stats", "travel", "Inventory", "trade", "search", "rest"]
         self.traders = [traders.otto.name, traders.alchemist.name]
         self.discoveries = ["Gilde"]
         self.searchdict["Gilde"] = self.Gilde
@@ -227,12 +228,16 @@ class Hutte(Loc):
 
     class Truhe:
         def searching(self):
-            print("In einer Ecke der Hütte findest du eine Truhe. Möchtest du versuchen sie zu öffnen?")
-            yn = input()
-            if yn == "y":
-                print("In der Truhe liegt ein altes rostiges Schwert und ein Schlüssel. Du hebst beides auf.")
-                Inventory.inv.append("Altes Schwert")
-                Inventory.inv.append("Schlüssel")
+            if "Schlüssel" in Inventory.inv:
+                print("Du hast diese Truhe bereits komplett geleert.")
+            else:
+                print("In einer Ecke der Hütte findest du eine Truhe. Möchtest du versuchen sie zu öffnen?")
+                yn = input()
+                if yn == "y":
+                    print("In der Truhe liegt ein altes rostiges Schwert und ein Schlüssel. Du hebst beides auf.")
+                    Inventory.inv.append("Altes Schwert")
+                    Inventory.inv.append("Schlüssel")
+
 
     class Door:
         def __init__(self):

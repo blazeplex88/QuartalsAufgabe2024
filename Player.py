@@ -9,8 +9,10 @@ class Zero():
     hp = 0
     speed = 0
 
+
 class Player:
-    #Stats
+    name = ""
+    # Stats
     level = 1
     exp = 0
     expneeded = 10
@@ -34,7 +36,7 @@ class Player:
     exactions = ["attack"]
     skills = list()
 
-    #Equipment
+    # Equipment
     mainhand = Zero
     offhand = Zero
     head = Zero
@@ -42,28 +44,34 @@ class Player:
     legs = Zero
     feet = Zero
 
-    #general info
+    # general info
     location = 0
     money = 0
     safespot = 0
     waves = 1
     enemiesKilled = list()
 
+    # teststory dingers
+    hamiltonfirst = True
+    cavefirst = True
+    ironswordgot = True
+
     def stats(self):
         print("""
-Du befindest dich in""",self.location.name,"""
-[""",self.money,"""] münzen
-Level: [""",self.level,"""]
-Exp: [""",self.exp,"""/""",self.expneeded,"""
+Du befindest dich in""", self.location.name, """
+[""", self.money, """] münzen
+Level: [""", self.level, """]
+Exp: [""", self.exp, """/""", self.expneeded, """
+Skillpoints:""", self.skillpoints,"""
 
-Defense: [""",self.defense,"""
+Defense: [""", self.defense, """
 ___________________________________________
-Speed: [""",self.kmh,"""] kmh
-Hp: [""",self.hp,"""/""",self.maxhp,"""]
-Mp: [""",self.mp,"""/""",self.maxmp,"""]
-Stamina: [""",self.stamina,"""/""",self.maxstamina,"""]
-Strength: [""",self.attack,"""]
-Critchance: [""",self.crit,"""]""")
+Speed: [""", self.kmh, """] kmh
+Hp: [""", self.hp, """/""", self.maxhp, """]
+Mp: [""", self.mp, """/""", self.maxmp, """]
+Stamina: [""", self.stamina, """/""", self.maxstamina, """]
+Strength: [""", self.attack, """]
+Critchance: [""", self.crit, """]""")
 
         if self.food <= 10:
             print("Du bist sehr hungrig")
@@ -97,20 +105,22 @@ Critchance: [""",self.crit,"""]""")
                 self.stamina += 1
                 self.maxstamina += 1
                 self.skillpoints -= 1
-            self.stats()
-
+            self.stats(self)
 
     def Equip(self):
         print("""
-Waffe: [""",self.mainhand.name,"""]
-zweite Hand: [""",self.offhand.name,"""]
-Helm: [""",self.head.name,"""]
-Brustplatte: [""",self.chest.name,"""]
-Hose: [""",self.legs.name,"""]
-Schuhe: [""",self.feet.name,"""]""")
-    def death(self,player):
-        print("Du bist gestorben. Loser")
-        player.location = player.safespot
+Waffe: [""", self.mainhand.name, """]
+zweite Hand: [""", self.offhand.name, """]
+Helm: [""", self.head.name, """]
+Brustplatte: [""", self.chest.name, """]
+Hose: [""", self.legs.name, """]
+Schuhe: [""", self.feet.name, """]""")
+
+    def death(self):
+        print("Du bist gestorben. ")
+        Stadt.orte.orte.remove(self.location.name)
+        self.location = self.safespot
+        Stadt.orte.orte.append(self.location.name)
         print("Du hast 50% deiner Münzen verloren und bist wieder in deinem letzten besuchten Safespot aufgewacht.")
-        player.money /= 2
-        player.hp = player.maxhp
+        self.money /= 2
+        self.hp = self.maxhp

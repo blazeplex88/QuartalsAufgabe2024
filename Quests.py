@@ -33,7 +33,7 @@ class KillQuest(Quest):
         if self.targethave >= self.targetneed:
             self.finish_quest(player)
         else:
-            print(self.name,": [",self.targethave,"/",self.targetneed,"]")
+            print(self.name, ": [", self.targethave, "/", self.targetneed, "]")
 
 
 class Ratten(KillQuest):
@@ -47,5 +47,17 @@ class Ratten(KillQuest):
         self.targetneed = 5
 
 
+class Goblin1(KillQuest):
+
+    def __init__(self):
+        super().__init__()
+        self.name = "Töte 10 Goblins"
+        self.rewardexp = 40
+        self.rewardmon = 45
+        self.target = "Goblin"
+        self.targetneeed = 10
+
+
 ratten = Ratten()
+goblin1 = Goblin1()
 quests = list()

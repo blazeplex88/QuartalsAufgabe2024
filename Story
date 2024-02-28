@@ -4,5 +4,12 @@ In der ersten Stadt [] kann der Spieler zum ersten mal seine Stats angucken und 
 In der Stadt gibt es auch eine Gilde bei der man sich die erste Quest abholen kann, wodurch sich eine Art Wiese, welche von Ratten infiziert ist, in der Nähe als reiseort freischaltet.
 Nachdem die Quest abgeschlossen wurde hat der Spieler genug Geld um sich das Eisenschwert bei einem Händler in der ersten Stadt zu kaufen.
 Der Händler gibt nach dem Kauf des Eisenschwerts dem Spieler eine Karte zu einer nahegelegenen Höhle um das Schwert zu testen.
+
 Wenn der Spieler dann zum ersten mal in die Höhle geht rettet er einen anderen Abenteurer der einem seine Quest 10 Goblins zu töten überlässt.
 Sobald die Quest abgeschlossen ist und der Spieler zur Gilde zurückkehrt, laden einen der geretet Abenteurer und ein paar seiner Freunde zu einem Drink ein, zudem übergeben sie dem Spieler die Wegbeschreibung zu einer weiteren Stadt.
+Nach erreichen der zweiten Stadt, wird der Spieler von zwei korrupten Wachen aufgehalten, nachdem diese besiegt sind lädt einen der General der dem Kampf zugeguckt hat in die MIliz ein
+
+Wenn der Spieler wählt der Miliz beizutreten:
+    Der General schickt einen zum Trainingscamp, welches man bestehen muss um tatsächlich der Miliz beizutreten
+    Da die anderen Rekruten sonst einen Vorteil hätten bringt er dir zuvor noch den Skill [Cleave] bei.
+    Daraufhin gibt er dem Spieler die Route zum Trainingscamp.

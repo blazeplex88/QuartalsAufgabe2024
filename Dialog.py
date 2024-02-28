@@ -13,10 +13,12 @@ import traders
 
 class Mydialog():
     def __init__(self):
-        self.player = Player.Player()
+        self.player = Player.Player
         self.player.location = ReisenTest.hutte
 
     def Dialog(self):
+        print("[Enter] um fortzufahren")
+        enter = input()
         for x in Quests.quests:
             x.check_quest(self.player)
         self.player.enemiesKilled.clear()
@@ -52,8 +54,8 @@ du kannst:
                 else:
                     print("etwas ist fehlgeschlagen. Bitte probiere es erneut")
             if chosen == "stats":
-                self.player.stats()
-                self.player.Equip()
+                self.player.stats(self.player)
+                self.player.Equip(self.player)
             if chosen == "explore":
                 enemy = random.choice(self.player.location.gegner)
                 print("Während du erkundest findest du einen",enemy.name,"Er/sie/es greift dich an")
@@ -65,12 +67,25 @@ du kannst:
                     traders.npcs[self.chosennpc].talk(self.player)
             if chosen == "search":
                 self.player.location.Search(self.player)
+            if chosen == "rest":
+                print("Du ruhst dich in einer Taverne aus. Deine Hp sind regeneriert, deine Mp sind regeneriert, du hast Stamina regeneriert")
+                self.player.hp = self.player.maxhp
+                self.player.mp = self.player.maxmp
+                self.player.stamina = self.player.maxstamina
+
+
         else:
             print("Das kannst du hier nicht machen.")
         self.Dialog()
 
 
 dia = Mydialog()
+print("Bitte melde alle fehler auf github!!!")
+print("Bevor es los geht:")
+print("Wie heißt du?")
+name = input()
+dia.player.name = name
+print("Hallo",name)
 print("""
 ________________________________________________________________________________________
 Du erwachst in einer nur leicht beleuchteten Hütte die du auf etwa 5 Quadratmeter schätzt.
