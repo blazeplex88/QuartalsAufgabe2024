@@ -1,12 +1,60 @@
 import Inventory
 
 
-class Weapons():
+class Weapons:
 
     def __init__(self):
         self.dmg = 0
         self.crit = 0
         self.infi = 0
+        self.defense = 0
+        self.hp = 0
+        self.mp = 0
+        self.type = "weapon"
+        self.slot = "main"
+
+    def Unequip(self, target, player):
+        player.attack -= target.dmg
+        player.crit -= target.crit
+        player.defense -= target.defense
+        player.hp -= target.hp
+        player.maxhp -= target.hp
+        player.mp -= target.mp
+        player.maxmp -= target.mp
+        if target.slot == "main":
+            player.mainhand = 0
+        elif target.slot == "off":
+            player.offhand = 0
+
+    def Equip(self, player):
+        if self.slot == "main":
+            if player.mainhand == 0:
+                pass
+            else:
+                self.Unequip(player.mainhand, player)
+        elif self.slot == "off":
+            if player.offhand == 0:
+                pass
+            else:
+                self.Unequip(player.offhand, player)
+        if self.slot == "main":
+            player.mainhand = self
+        elif self.slot == "off":
+            player.offhand = self
+
+        print("atk: [", player.attack, "] -> [", player.attack + self.dmg, "]")
+        print("crit: [", player.crit, "] -> [", player.crit + self.crit, "]")
+        print("defense: [", player.defense, "] -> [", player.defense + self.defense, "]")
+        print("hp: [", player.maxhp, "] -> [", player.maxhp + self.defense, "]")
+
+        print(self.name, "ausgerüstet.")
+        player.attack += self.dmg
+        player.crit += self.crit
+
+    def Info(self):
+        print("""name = """, self.name, """
+atk = """, self.dmg, """
+crit =""", self.crit)
 
 
 class Items:
@@ -38,7 +86,20 @@ MP: [""", player.mp, "/", player.maxmp, """]""")
         Inventory.inv.remove(self.name)
 
 
-class Rüstung:
+class Schild(Weapons):
+
+    def __init__(self):
+        super().__init__()
+        self.dmg = 0
+        self.crit = 0
+        self.infi = 0
+        self.defense = 7
+        self.hp = 1
+        self.mp = 0
+        self.slot = "off"
+
+
+class Ruestung:
 
     def __init__(self):
         super().__init__()
@@ -57,7 +118,7 @@ Hp Boost = """, self.hp, """
 Speed Boost = """, self.speed)
 
 
-class Helm(Rüstung):
+class Helm(Ruestung):
 
     def __init__(self):
         super().__init__()
@@ -75,17 +136,17 @@ class Helm(Rüstung):
         else:
             self.Unequip(player.head, player)
         player.head = self
-        print("def: [", player.defense,"] -> [",player.defense + self.defense,"]")
+        print("def: [", player.defense, "] -> [", player.defense + self.defense, "]")
         print("hp: [", player.hp, "] -> [", player.hp + self.hp, "]")
         print("speed: [", player.kmh, "] -> [", player.kmh + self.speed, "]")
-        print(self.name," ausgerüstet")
+        print(self.name, " ausgerüstet")
         player.defense += self.defense
         player.hp += self.hp
         player.maxhp += self.hp
         player.kmh += self.speed
 
 
-class Brustplatte(Rüstung):
+class Brustplatte(Ruestung):
 
     def __init__(self):
         super().__init__()
@@ -103,17 +164,17 @@ class Brustplatte(Rüstung):
         else:
             self.Unequip(player.chest, player)
         player.chest = self
-        print("def: [", player.defense,"] -> [",player.defense + self.defense,"]")
+        print("def: [", player.defense, "] -> [", player.defense + self.defense, "]")
         print("hp: [", player.hp, "] -> [", player.hp + self.hp, "]")
         print("speed: [", player.kmh, "] -> [", player.kmh + self.speed, "]")
-        print(self.name," ausgerüstet")
+        print(self.name, " ausgerüstet")
         player.defense += self.defense
         player.hp += self.hp
         player.maxhp += self.hp
         player.kmh += self.speed
 
 
-class Hose(Rüstung):
+class Hose(Ruestung):
 
     def __init__(self):
         super().__init__()
@@ -131,17 +192,17 @@ class Hose(Rüstung):
         else:
             self.Unequip(player.legs, player)
         player.legs = self
-        print("def: [", player.defense,"] -> [",player.defense + self.defense,"]")
+        print("def: [", player.defense, "] -> [", player.defense + self.defense, "]")
         print("hp: [", player.hp, "] -> [", player.hp + self.hp, "]")
         print("speed: [", player.kmh, "] -> [", player.kmh + self.speed, "]")
-        print(self.name," ausgerüstet")
+        print(self.name, " ausgerüstet")
         player.defense += self.defense
         player.hp += self.hp
         player.maxhp += self.hp
         player.kmh += self.speed
 
 
-class Schuhe(Rüstung):
+class Schuhe(Ruestung):
 
     def __init__(self):
         super().__init__()
@@ -159,10 +220,10 @@ class Schuhe(Rüstung):
         else:
             self.Unequip(player.feet, player)
         player.feet = self
-        print("def: [", player.defense,"] -> [",player.defense + self.defense,"]")
+        print("def: [", player.defense, "] -> [", player.defense + self.defense, "]")
         print("hp: [", player.hp, "] -> [", player.hp + self.hp, "]")
         print("speed: [", player.kmh, "] -> [", player.kmh + self.speed, "]")
-        print(self.name," ausgerüstet")
+        print(self.name, " ausgerüstet")
         player.defense += self.defense
         player.hp += self.hp
         player.maxhp += self.hp
@@ -179,30 +240,6 @@ class Sword(Weapons):
         self.wert = 0
         self.type = "Equip"
         self.slot = "Mainhand"
-
-    def Unequip(self, target, player):
-        player.attack -= target.dmg
-        player.crit -= target.crit
-        player.mainhand = 0
-
-    def Equip(self, player):
-        if player.mainhand == 0:
-            pass
-        else:
-            self.Unequip(player.mainhand, player)
-
-        player.mainhand = self
-
-        print("atk: [", player.attack, "] -> [", player.attack + self.dmg, "]")
-        print("crit: [", player.crit, "] -> [", player.crit + self.crit, "]")
-        print(self.name, "ausgerüstet.")
-        player.attack += self.dmg
-        player.crit += self.crit
-
-    def Info(self):
-        print("""name = """, self.name, """
-atk = """, self.dmg, """
-crit =""", self.crit)
 
 
 class Holzschwert(Sword):
@@ -275,6 +312,33 @@ class SchlusselHutte:
         print("Ein einfacher leicht rostiger Schlüssel")
 
 
+class GildedShield(Schild):
+
+    def __init__(self):
+        super().__init__()
+        self.defense = 7
+        self.hp = 2
+        self.name = "Vergoldeter Schild"
+
+
+class GildedSword(Sword):
+
+    def __init__(self):
+        super().__init__()
+        self.dmg = 17
+        self.crit = 11
+        self.name = "Vergoldetes Schwert"
+
+
+class GildedHarnish(Brustplatte):
+
+    def __init__(self):
+        super().__init__()
+        self.defense = 2
+        self.hp = 12
+        self.name = "Vergoldete Brustplatte"
+
+
 holzschwert = Holzschwert()
 steinschwert = Steinschwert()
 eisenschwert = Eisenschwert()
@@ -282,6 +346,9 @@ lederharnisch = Lederharnisch()
 healthPotion = HealthPotion()
 kleineRation = KleineRation()
 schlusselHutte = SchlusselHutte()
+gildedShield = GildedShield()
+gildedSword = GildedSword()
+gildedHarnish = GildedHarnish()
 
 items = dict()
 items[holzschwert.name] = holzschwert
@@ -291,3 +358,6 @@ items[lederharnisch.name] = lederharnisch
 items[healthPotion.name] = healthPotion
 items[kleineRation.name] = kleineRation
 items[schlusselHutte.name] = schlusselHutte
+items[gildedShield.name] = gildedShield
+items[gildedHarnish.name] = gildedHarnish
+items[gildedSword.name] = gildedSword

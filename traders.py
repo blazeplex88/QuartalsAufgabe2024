@@ -4,13 +4,13 @@ import Player
 import Skills
 
 
-class Npcs():
+class Npcs:
     def __init__(self):
         super().__init__()
         self.name = 0
 
 
-class Trader():
+class Trader:
 
     def __init__(self):
         super().__init__()
@@ -20,7 +20,7 @@ class Trader():
 
     def trade(self, player):
         monmul = 1
-        print("dies sind meine Waren:", self.waren, "möchten sie etwas kaufen?")
+        print("dies sind meine Waren:", self.waren, "was möchten sie kaufen?")
         object = input()
         if object in self.waren:
             print("Dieses Objekt kostet:", Items.items[object].wert, "Silber. Sie haben momentan:", player.money, "Silber"

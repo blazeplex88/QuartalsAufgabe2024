@@ -1,7 +1,6 @@
 import random
 
 import Inventory
-import Items
 import Player
 import Quests
 import ReisenTest
@@ -11,12 +10,13 @@ import testStory
 import traders
 
 
-class Mydialog():
+class Mydialog:
     def __init__(self):
         self.player = Player.Player
         self.player.location = ReisenTest.hutte
 
     def Dialog(self):
+        ReisenTest.georgeTrainingsCamp.arena.player = self.player
         print("[Enter] um fortzufahren")
         enter = input()
         for x in Quests.quests:

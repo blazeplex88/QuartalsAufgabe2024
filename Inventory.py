@@ -19,7 +19,7 @@ Geld: [""",self.money,"""]""")
     print("mit was möchtest du Interagieren?")
     choice = input()
     if choice in inv:
-        if Items.items[choice] == self.mainhand or Items.items[choice] == self.head or Items.items[choice] == self.chest or Items.items[choice] == self.legs or Items.items[choice] == self.feet:
+        if Items.items[choice] == self.mainhand or Items.items[choice] == self.offhand or Items.items[choice] == self.head or Items.items[choice] == self.chest or Items.items[choice] == self.legs or Items.items[choice] == self.feet:
             print("Willst du es abrüsten oder untersuchen?")
             action = input()
             if action == "abrüsten":
@@ -36,7 +36,7 @@ Geld: [""",self.money,"""]""")
             yn = input()
             if yn == "y":
                 Items.items[choice].Info()
-        else:
+        elif Items.items[choice].type == "weapon":
             print("Willst du es ausrüsten oder untersuchen")
             action = input()
             if action == "ausrüsten":

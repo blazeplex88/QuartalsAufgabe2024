@@ -55,23 +55,28 @@ class Player:
     hamiltonfirst = True
     cavefirst = True
     ironswordgot = True
+    georgefirst = True
+    georgeKnightAccept = None
+    georgeTrainFirst = True
+    travelDeath = False
+    traveling = False
 
     def stats(self):
         print("""
 Du befindest dich in""", self.location.name, """
 [""", self.money, """] münzen
 Level: [""", self.level, """]
-Exp: [""", self.exp, """/""", self.expneeded, """
-Skillpoints:""", self.skillpoints,"""
+Exp: [""", self.exp, """/""", self.expneeded, """]
+Skillpoints: [""", self.skillpoints, """]
 
-Defense: [""", self.defense, """
+Critchance: [""", self.crit, """]
+Defense: [""", self.defense, """]
 ___________________________________________
 Speed: [""", self.kmh, """] kmh
 Hp: [""", self.hp, """/""", self.maxhp, """]
 Mp: [""", self.mp, """/""", self.maxmp, """]
 Stamina: [""", self.stamina, """/""", self.maxstamina, """]
-Strength: [""", self.attack, """]
-Critchance: [""", self.crit, """]""")
+Strength: [""", self.attack, """]""")
 
         if self.food <= 10:
             print("Du bist sehr hungrig")
@@ -98,14 +103,14 @@ Critchance: [""", self.crit, """]""")
             elif skill == "Strength":
                 self.attack += 1
                 self.skillpoints -= 1
-            elif skill == "Critchance":
-                self.crit += 0.5
-                self.skillpoints -= 1
             elif skill == "Stamina":
                 self.stamina += 1
                 self.maxstamina += 1
                 self.skillpoints -= 1
-            self.stats(self)
+            if skill == "n":
+                pass
+            else:
+                self.stats(self)
 
     def Equip(self):
         print("""
@@ -117,10 +122,12 @@ Hose: [""", self.legs.name, """]
 Schuhe: [""", self.feet.name, """]""")
 
     def death(self):
+        if self.traveling:
+            self.travelDeath = True
         print("Du bist gestorben. ")
-        Stadt.orte.orte.remove(self.location.name)
-        self.location = self.safespot
         Stadt.orte.orte.append(self.location.name)
+        self.location = self.safespot
+        Stadt.orte.orte.remove(self.location.name)
         print("Du hast 50% deiner Münzen verloren und bist wieder in deinem letzten besuchten Safespot aufgewacht.")
         self.money /= 2
         self.hp = self.maxhp

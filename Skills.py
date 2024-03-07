@@ -17,13 +17,13 @@ class Cleave(Skill):
         self.mpcost = 3
         self.damage = 10
 
-    def Use(self,target,player):
-        player.mp -= self.mpcost
-        self.actdamage = (self.damage + player.attack)
+    def Use(self,target,user):
+        user.mp -= self.mpcost
+        self.actdamage = (self.damage + user.attack)
         target.hp -= self.actdamage
-        print("[Du nutzt den Skill {Cleave}]")
-        print("[Durch {Cleave} nimmt der/die/das",target.name,"",self.actdamage,"Schaden. Es verbleiben",target.hp,"/",target.maxhp,"Hp")
-        print("[Du nutzt",self.mpcost,"MP. Du hast noch",player.mp,"/",player.maxmp,"Mp verbleibend.")
+        print("[",user.name," nutzt den Skill {Cleave}]")
+        print("[Durch {Cleave} nimmt [",target.name,"]",self.actdamage,"Schaden. Es verbleiben",target.hp,"/",target.maxhp,"Hp")
+        print("[",user.name," nutzt",self.mpcost,"MP. ",user.name,"hat noch",user.mp,"/",user.maxmp,"Mp verbleibend.")
 
 cleave = Cleave()
 

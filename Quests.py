@@ -1,3 +1,6 @@
+import ReisenTest
+
+
 class Quest:
 
     def __init__(self):
@@ -51,11 +54,13 @@ class Goblin1(KillQuest):
 
     def __init__(self):
         super().__init__()
-        self.name = "Töte 10 Goblins"
+        self.name = "Töte 5 Goblins"
         self.rewardexp = 40
         self.rewardmon = 45
         self.target = "Goblin"
-        self.targetneeed = 10
+        self.targetneed = 5
+
+
 
 
 ratten = Ratten()

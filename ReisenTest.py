@@ -3,8 +3,6 @@ from math import sqrt
 import Inventory
 import Items
 # hier importieren wir die funktion des Wurzelziehens aus der Mathe datei die in pycharm mit installiert ist
-
-import Player
 import Quests
 import Stadt
 import gegner
@@ -82,6 +80,8 @@ class Loc:
         print("Du reist von", self.name, "nach", dest.name)
         # Die Namen der beiden Orte werden angezeigt in diesem Text
 
+        player.traveling = True
+
         print("Die Reise dauert etwa", round(tspent, 1), tkind)
         if tkind == "Stunden" and tspent >= 12:
             self.bandits = round((tspent - 12) / 24) + 1
@@ -91,41 +91,46 @@ class Loc:
             print("Auf deiner Reise wirst du Nachts von Banditen überfallen")
         while self.bandits > 0:
             gegner.bandit.fight(player)
-            player.food -= 6
-            print("Am nächsten Morgen benötigst du Nahrung.")
-            self.loop = True
-            while self.loop:
-                if player.food <= 10:
-                    print("Du bist sehr hungrig")
-                elif player.food <= 20:
-                    print("Du hast Hunger")
-                elif player.food <= 30:
-                    print("Du bist satt")
-                elif player.food > 30:
-                    print("Du bist komplett voll")
-                print("Was aus deinem Inventar möchtest du Essen? [option/n]")
-                print(Inventory.inv)
-                self.chosen = input()
-                if self.chosen == "n":
-                    self.loop = False
-                elif Items.items[self.chosen].type == "Consumable":
-                    print("""Dieses Objekt gibt dir:
-""", Items.items[self.chosen].nahrung, """ Nahrung
-""", Items.items[self.chosen].hp, """ Hp
-""", Items.items[self.chosen].mp, """ Mp
-willst du es verbrauchen? [y/n]""")
-                    self.yesno = input()
-                    if self.yesno == "y":
-                        Items.items[self.chosen].Using(player)
+            if player.travelDeath:
+                player.traveling = False
+                player.travelDeath = False
+            else:
+                player.food -= 6
+                print("Am nächsten Morgen benötigst du Nahrung.")
+                self.loop = True
+                while self.loop:
+                    if player.food <= 10:
+                        print("Du bist sehr hungrig")
+                    elif player.food <= 20:
+                        print("Du hast Hunger")
+                    elif player.food <= 30:
+                        print("Du bist satt")
+                    elif player.food > 30:
+                        print("Du bist komplett voll")
+                    print("Was aus deinem Inventar möchtest du Essen? [option/n]")
+                    print(Inventory.inv)
+                    self.chosen = input()
+                    if self.chosen == "n":
                         self.loop = False
+                    elif Items.items[self.chosen].type == "Consumable":
+                        print("""Dieses Objekt gibt dir:
+    """, Items.items[self.chosen].nahrung, """ Nahrung
+    """, Items.items[self.chosen].hp, """ Hp
+    """, Items.items[self.chosen].mp, """ Mp
+    willst du es verbrauchen? [y/n]""")
+                        self.yesno = input()
+                        if self.yesno == "y":
+                            Items.items[self.chosen].Using(player)
+                            self.loop = False
+                        else:
+                            self.loop = True
                     else:
                         self.loop = True
+                if self.bandits < 1:
+                    self.bandits -= self.bandits
                 else:
-                    self.loop = True
-            if self.bandits < 1:
-                self.bandits -= self.bandits
-            else:
-                self.bandits -= 1
+                    self.bandits -= 1
+                player.traveling = False
 
         # Wie lange die Reise dauert, wird durch ein gerundetes Ergebnis und das vorher bestimmte tkind dargestellt
 
@@ -135,7 +140,7 @@ willst du es verbrauchen? [y/n]""")
 Was möchtest du untersuchen?""")
         search = input()
         if search in self.discoveries:
-            self.searchdict[search].searching(self)
+            self.searchdict[search].searching()
         else:
             print("Das geht hier nicht")
 
@@ -144,26 +149,41 @@ class Hamilton(Loc):
     # Eine Instanz der Loc Klasse namens Hamilton wird erstellt
     class Gilde:
 
+        def __init__(self):
+            self.Guildfirst = True
+            self.gobQuestComp = False
+
         def searching(self):
-            print("""Du stehst vor einem großen Gebäude das in einem wesentlich besseren Zustand ist als der Rest der "
-Stadt zu sein scheint.
-Um dieses Gebäude versammeln sich viele verschiedene Personen.
-Möchtest du es betreten? [y/n]""")
-            yn = input()
-            if yn == "y":
-                print("""Du betrittst die Gilde
-Innerhalb befinden sich noch mehr Menschen von denen viele Waffen besitzen, welche um einiges 
-wertvoller aussehen als deine eigene.
-Eine Große Menschenmenge hat sich um eine Art tafel gebildet. Du drängst dich durch die menge 
-und siehst das eine große Anzahl an zu erledigenden Aufgaben an der Tafel hängen. Du überlegst
-das die meisten vermutlich zu schwer für dein momentanes können ist und wählst die am 
-einfachsten aussehende Aufgabe""")
-                print(Quests.ratten.name)
-                Quests.ratten.accept_quest()
-                print("Auf der Rückseite findest du eine Karte zum Jagdort")
-                print("Du kannst jetzt zur Verseuchten Wiese reisen")
-                Stadt.orte.orte.append("Wiese")
-                hamilton.discoveries.remove("Gilde")
+            if self.Guildfirst:
+                print("""Du stehst vor einem großen Gebäude das in einem wesentlich besseren Zustand ist als der Rest der "
+    Stadt zu sein scheint.
+    Um dieses Gebäude versammeln sich viele verschiedene Personen.
+    Möchtest du es betreten? [y/n]""")
+                yn = input()
+                if yn == "y":
+                    print("""Du betrittst die Gilde
+    Innerhalb befinden sich noch mehr Menschen von denen viele Waffen besitzen, welche um einiges 
+    wertvoller aussehen als deine eigene.
+    Eine Große Menschenmenge hat sich um eine Art tafel gebildet. Du drängst dich durch die menge 
+    und siehst das eine große Anzahl an zu erledigenden Aufgaben an der Tafel hängen. Du überlegst
+    das die meisten vermutlich zu schwer für dein momentanes können ist und wählst die am 
+    einfachsten aussehende Aufgabe""")
+                    print(Quests.ratten.name)
+                    Quests.ratten.accept_quest()
+                    print("Auf der Rückseite findest du eine Karte zum Jagdort")
+                    print("Du kannst jetzt zur Verseuchten Wiese reisen")
+                    Stadt.orte.orte.append("Wiese")
+                    self.Guildfirst = False
+            elif self.gobQuestComp:
+                print("""Kurz nachdem du das Gildengebäude betrittst ruft dich der Abenteurer den du vorhin gerretet hast
+Orion:"Hi, hier drüben. Ich habe mich vorhin garnicht vorgestellt, mein name ist Orion. Danke das du mich gerretet hast.
+Leider kann ich dir immer noch nicht viel anbieten, allerdings kenne ich eine Stadt in der du besser starten kannst als hier. 
+Hier nimm"
+[George freigeschaltet]
+"Ich habe gehört dass das Heer momentan nach neuen Soldaten sucht. Da du so stark bist wie du bist, nehmen die dich bestimmt
+schnell auf." """)
+                Stadt.orte.orte.append("George")
+                self.gobQuestComp = False
 
     def __init__(self):
         super().__init__()
@@ -171,7 +191,8 @@ einfachsten aussehende Aufgabe""")
         self.options = ["stats", "travel", "Inventory", "trade", "search", "rest"]
         self.traders = [traders.otto.name, traders.alchemist.name]
         self.discoveries = ["Gilde"]
-        self.searchdict["Gilde"] = self.Gilde
+        self.gilde = self.Gilde()
+        self.searchdict["Gilde"] = self.gilde
 
         # Variablen bearbeitet
 
@@ -184,9 +205,7 @@ class George(Loc):
         self.name = "George"
         self.x = 60
         self.y = 60
-        self.options = ["stats", "travel", "Inventory", "talk", "trade"]
-        self.npcs = [traders.eric.name]
-        self.traders = [traders.marlon.name]
+        self.options = ["stats", "travel", "Inventory", "rest"]
 
 
 class Cave(Loc):
@@ -238,10 +257,9 @@ class Hutte(Loc):
                     Inventory.inv.append("Altes Schwert")
                     Inventory.inv.append("Schlüssel")
 
-
     class Door:
         def __init__(self):
-            self.Doorunlock = None
+            self.Doorunlock = False
 
         def searching(self):
             if "Schlüssel" in Inventory.inv:
@@ -258,13 +276,16 @@ class Hutte(Loc):
         self.x = -20
         self.y = -30
         self.z = 1
-        self.Doorunlock = False
         self.waves = 0
         self.options = ["Inventory", "search"]
         self.discoveries = ["Tisch", "Truhe", "Tür"]
-        self.searchdict["Tür"] = self.Door
-        self.searchdict["Truhe"] = self.Truhe
-        self.searchdict["Tisch"] = self.Tisch
+        self.door = self.Door()
+        self.truhe = self.Truhe()
+        self.tisch = self.Tisch()
+        self.searchdict["Tür"] = self.door
+        self.searchdict["Truhe"] = self.truhe
+        self.searchdict["Tisch"] = self.tisch
+
 
 class Wiese(Loc):
 
@@ -278,12 +299,38 @@ class Wiese(Loc):
         self.gegner = [gegner.ratte]
 
 
+class GeorgeTrainingsCamp(Loc):
+    class Arena:
+
+        def __init__(self):
+            self.player = None
+
+        def searching(self):
+            print(
+                "In dieser Arena kannst du mit andere Rekruten sparren, allerdings kann dies trotzdem Schaden anrichten")
+            print("Möchtest du trotzdem in der Arena trainieren? [y/n]")
+            yn = input()
+            if yn == "y":
+                gegner.ritterRekrut.fight(self.player)
+
+    def __init__(self):
+        super().__init__()
+        self.name = "Trainings camp"
+        self.x = 60.2
+        self.y = 60.2
+        self.options = ["stats", "travel", "Inventory", "rest", "search"]
+        self.arena = self.Arena()
+        self.discoveries = ["Arena"]
+        self.searchdict["Arena"] = self.arena
+
+
 cave = Cave()
 hamilton = Hamilton()
 george = George()
 fort = Fort()
 hutte = Hutte()
 wiese = Wiese()
+georgeTrainingsCamp = GeorgeTrainingsCamp()
 # Instanzen der beiden soeben erstellten Klassen
 
 
